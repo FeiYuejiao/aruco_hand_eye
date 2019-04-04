@@ -1,0 +1,27 @@
+<launch>
+  <!-- The end-effector frame_id -->
+  <arg name="ee_frame"/>
+
+  <!-- Bring up a realsense -->
+  <include file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+    <arg name="publish_tf" value="false"/>
+    <arg name="depth_registration" value="true"/>
+  </include>
+
+  <!-- Calibrate the extrinsics for a realsense mounted to a robot base -->
+  <include file="$(find aruco_hand_eye)/launch/aruco_hand_eye.launch">
+    <arg name="markerid"   value="571"/>
+    <arg name="markersize" value="0.100"/>
+    <arg name="publish_tf" value="true"/>
+
+    <arg name="marker_parent_frame" value="$(arg ee_frame)"/>
+    <arg name="camera_parent_frame" value="/world"/>
+    <arg name="camera" value="/camera/rgb"/>
+
+    <arg name="camera_frame" value="/camera_rgb_optical_frame"/>
+    <arg name="xyz_optical_base" value="[0.000, -0.045, 0.000]"/>
+    <arg name="rpy_optical_base" value="[-1.571, -0.000, -1.571]"/>
+  </include>
+
+</launch>
+
