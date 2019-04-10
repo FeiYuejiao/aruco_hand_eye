@@ -51,7 +51,7 @@ class HandEyeConnector(object):
 
         # marker subscriber
         self.aruco_subscriber = rospy.Subscriber(
-                'aruco_tracker/transform',
+                'aruco_ros/transform',
                 TransformStamped,
                 self.aruco_cb,
                 queue_size=1)

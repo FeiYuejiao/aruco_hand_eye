@@ -4,19 +4,19 @@
   <arg name="marker_parent_frame"/>
 
   <!-- The ARUCO marker properties -->
-  <arg name="markerid"              default="582"/>
-  <arg name="markersize"            default="0.141"/>    <!-- in m -->
+  <arg name="markerid"              default="571"/>
+  <arg name="markersize"            default="0.100"/>    <!-- in m -->
   <arg name="sample_rate"           default="2"/>
 
   <!-- The camera topics and frame to use for calibration -->
   <arg name="camera" doc="camera namespace"/>
   <arg name="image"                 default="$(arg camera)/image_rect_color"/>
   <arg name="camera_info"           default="$(arg camera)/camera_info"/>
-  <arg name="camera_frame"          default="$(arg camera)_optical_frame"/>
-  <arg name="marker_frame"          default="/hand_eye/$(arg camera)/aruco_marker_frame"/>
+  <arg name="camera_frame"          default="$(arg camera)/rgb/camera_object"/>
+  <arg name="marker_frame"          default="aruco_marker_frame"/>
 
   <!-- leave empty and the pose will be published wrt param parent_name -->
-  <arg name="reference_frame"       default="$(arg camera_frame)"/>
+  <arg name="reference_frame"       default=""/>
 
   <!-- Publish frames while calibrating -->
   <arg name="publish_tf" default="true"/>
@@ -37,7 +37,7 @@
   <group ns="$(arg camera)">
 
     <!-- Track the aruco target in a given camera -->
-    <node name="aruco_tracker"
+    <node name="aruco_ros"
       pkg="aruco_ros"
       type="single">
       <remap from="/camera_info" to="$(arg camera_info)" />
@@ -50,6 +50,7 @@
       <param name="camera_frame"       value="$(arg camera_frame)"/>
       <param name="marker_frame"       value="$(arg marker_frame)" />
     </node>
+
 
     <!-- Run the VISP solver to determine the extrinsic parameters -->
     <node name="hand_eye_solver"
