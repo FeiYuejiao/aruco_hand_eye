@@ -10,11 +10,11 @@ ARUCO / VISP Hand-Eye Calibration
 
 使用aruco在线生成网站生成marker  <http://chev.me/arucogen/>  
 
-![image-20190410211519257](/Users/apple/Library/Application Support/typora-user-images/image-20190410211519257.png)
+![image-20190410211519257](https://ws2.sinaimg.cn/large/006tNc79ly1g1xuu9dzb2j315w08cq3t.jpg)
 
 生成的图像如下，由于打印机打印出来的尺寸可能有偏差，不是100mm，在打印出来以后自己测量真实尺寸就行。
 
-![image-20190410211544813](/Users/apple/Library/Application Support/typora-user-images/image-20190410211544813.png)
+![image-20190410211544813](https://ws1.sinaimg.cn/large/006tNc79ly1g1xuudq76nj315s0h0q3e.jpg)
 
 启动realsense，查看有哪些frame可以选择，我选的是camera_aligned_depth_to_color_frame下面的camera_color_optical_frame because aruco uses rgb image and depth frame is aligned to color frame here：
 
@@ -22,7 +22,7 @@ ARUCO / VISP Hand-Eye Calibration
 
 ```rosrun rqt_tf_frame rqt_tf_frame```
 
-![image-20190410211710613](/Users/apple/Library/Application Support/typora-user-images/image-20190410211710613.png)
+![image-20190410211710613](https://ws4.sinaimg.cn/large/006tNc79ly1g1xuui1v5sj31kc0cmwli.jpg)
 
 在官方readme中给了eye-in-hand和eye-on-base两种情况，本实验使用的是eye-on-base，就是相机固定位置，maker固定在机械臂末端。参考eye-on-base新建一个kinova.launch文件：
 
@@ -63,15 +63,15 @@ ARUCO / VISP Hand-Eye Calibration
 
 rviz中看aruco_tracker_result 是这样的有些角度可能没有坐标系产生，这些位置就不能用。
 
-![image-20190410212022185](/Users/apple/Library/Application Support/typora-user-images/image-20190410212022185.png)
+![image-20190410212022185](https://ws4.sinaimg.cn/large/006tNc79ly1g1xuunhy27j31ee0k24ig.jpg)
 
 如果一切顺利，在```roslaunch aruco_hand_eye kinova.launch```窗口应该出现下面的命令行，每capture一个sample，控制机器人末端变换一定的角度或者位置，因为我对moveit!还不是很熟悉，为了方便直接使用的joystick。capture 3张图后计算出的平移和旋转如下，看平移已经比较接近我测量的真实值，但是可以多capture几张，我一般控制在20张左右。有些位置结果不太好要discard。
 
-![image-20190410212056623](/Users/apple/Library/Application Support/typora-user-images/image-20190410212056623.png)
+![image-20190410212056623](https://ws1.sinaimg.cn/large/006tNc79ly1g1xuuujj24j30yk08o42l.jpg)
 
 真实的实验环境：
 
-![image-20190410212120087](/Users/apple/Library/Application Support/typora-user-images/image-20190410212120087.png)
+![image-20190410212120087](https://ws1.sinaimg.cn/large/006tNc79ly1g1xuuxepeyj30yu0jye81.jpg)
 
 
 
